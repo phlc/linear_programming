@@ -1,9 +1,12 @@
+from re import M
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_marshmallow import Marshmallow
 from os import path
 
-db = SQLAlchemy()
 DB_NAME = "database.db"
+db = SQLAlchemy()
+ma = Marshmallow()
 
 def create_app():
     app = Flask(__name__)
@@ -12,11 +15,10 @@ def create_app():
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["SQLALCHEMY_ECHO"] = True
     db.init_app(app)
+    ma.init_app(app)
 
     from .routes import routes
     app.register_blueprint(routes, url_prefix='/')
-
-    from .models import Recipe, Ingredient
 
     create_database(app)
 
