@@ -7,7 +7,7 @@ DB_NAME = "database.db"
 
 def create_app():
     app = Flask(__name__)
-    app.config["SECRET_KEY"] = "falsneicmiygkhjgg79l7382xlkd"
+    app.config["SECRET_KEY"] = "falsneicm382xlkd"
     app.config["SQLALCHEMY_DATABASE_URI"] =  f'sqlite:///{DB_NAME}'
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["SQLALCHEMY_ECHO"] = True
@@ -27,9 +27,3 @@ def create_database(app):
     if not path.exists('backend/' + DB_NAME):
         db.create_all(app=app)
         print('Database Created')  
-
-
-app = create_app()
-
-if __name__ == '__main__':
-    app.run(debug=True)
