@@ -52,3 +52,64 @@ class RecipeSchema(ma.Schema):
 
 recipe_schema = RecipeSchema()
 many_recipes_schema = RecipeSchema(many=True)
+
+# Helpers
+
+def validate_recipe(data):
+    response = {'valid': True, 'errors': [], 'object': None}
+    title = data['title']
+    howto = data['howto']
+    portions = data['portions']
+    cost = data['cost']
+    revenue = data['revenue']
+    ingredients = data['ingredients']
+    ids = []
+
+    if(title == None):
+        response['errors'].append({'title': 'not found'})
+        response['valid'] = False
+    if(Recipe.query.filter_by(title=title).first() != None):
+        response['errors'].append({'title': 'already exists'})
+        response['valid'] = False
+    if(howto == None):
+        response['errors'].append({'howto': 'not found'})
+        response['valid'] = False
+    if(portions == None):
+        response['errors'].append({'portions': 'not found'})
+        response['valid'] = False
+    if(cost == None):
+        response['errors'].append({'cost': 'not found'})
+        response['valid'] = False
+    if(revenue == None):
+        response['errors'].append({'revenue': 'not found'})
+        response['valid'] = False
+    if(ingredients == None or len(ingredients)<1):
+        response['errors'].append({'ingredients': 'not found'})
+        response['valid'] = False
+    else:
+        for ingredient in ingredients:
+            ingredient_id = None
+            if(ingredient['name'] == None):
+                response['errors'].append({'ingredient': 'without name'})
+                response['valid'] = False
+            else:
+                ingredient_id = Ingredient.query.filter_by(name=ingredient['name']).first()
+            if(ingredient_id == None):
+                response['errors'].append({'ingredients': f"{ingredient['name']} not found in database"})
+                response['valid'] = False
+            if(ingredient['quantity'] == None):
+                response['errors'].append({'ingredient': 'without quantity'})
+                response['valid'] = False
+            if(response['valid']):
+                ids.append((ingredient_id.id, ingredient['quantity']))
+    
+    if(response['valid']):
+        recipe = Recipe(title=title, howto=howto, portions=portions, cost=cost, revenue=revenue)
+        db.session.add(recipe)
+        db.session.commit()
+        for id in ids:
+            db.session.add(Association(recipe_id=recipe.id, ingredient_id=id[0], quantity=id[1]))
+        db.session.commit()
+        response['object'] = recipe_schema.dump(recipe)
+
+    return response

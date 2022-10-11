@@ -1,6 +1,6 @@
 from flask import Blueprint, request
 from . import db, ma
-from .models import Recipe, Ingredient, ingredient_schema, many_ingredients_schema, recipe_schema, many_recipes_schema
+from .models import Recipe, Ingredient, ingredient_schema, many_ingredients_schema, recipe_schema, many_recipes_schema, validate_recipe
 
 
 
@@ -23,13 +23,18 @@ def get_ingredient():
     name = request.json['name'].lower()
     ingredient = Ingredient.query.filter_by(name=name).first()
     if(ingredient == None):
-        return {'Error': 'Ingredient not Found'}
+        return {'error': 'Ingredient not Found', 'type': 1}
     return ingredient_schema.dump(ingredient)
 
 @routes.route('/add-ingredient', methods=['POST'])
 def add_ingredient():
     name = request.json['name'].lower()
     unit = request.json['unit'].lower()
+
+    if(name == None or unit == None):
+        return {'error': 'name or unit missing', 'type': 2}
+    if(Ingredient.query.filter_by(name=name).first() != None):
+        return {'error': 'ingredient already exists', 'type': 3}
 
     ingredient = Ingredient(name=name, unit=unit)
     db.session.add(ingredient)
@@ -47,12 +52,15 @@ def get_recipe():
     id = request.json['id']
     recipe = Recipe.query.get(id)
     if(recipe == None):
-        return {'Error': 'Recipe not Found'}
+        return {'error': 'Recipe not Found', 'type': 4}
     return recipe_schema.dump(recipe)
 
 @routes.route('/add-recipe', methods=['POST'])
 def add_recipe():
-    return "To Do"
+    recipe = validate_recipe(request.json)
+    if(not recipe['valid']):
+        return {'errors': recipe['errors']}
+    return recipe['object']
 
 
 @routes.route('/optimize-production', methods=['POST'])
