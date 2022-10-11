@@ -52,4 +52,14 @@ def get_recipe():
 
 @routes.route('/add-recipe', methods=['POST'])
 def add_recipe():
-    
+    return "To Do"
+
+
+@routes.route('/optimize-production', methods=['POST'])
+def optimize_production():
+    return "To Do"
+
+
+@routes.route('/optimize-profit', methods=['POST'])
+def optimize_profit():
+    return "To Do"
