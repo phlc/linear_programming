@@ -15,6 +15,9 @@ class Recipe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), unique=True)
     howto = db.Column(db.Text)
+    portions = db.Column(db.Integer)
+    cost = db.Column(db.Integer)
+    revenue = db.Column(db.Integer)
     ingredients = db.relationship('Association', back_populates='recipe')
 
 class Ingredient(db.Model):
@@ -28,6 +31,24 @@ class Ingredient(db.Model):
 class IngredientSchema(ma.Schema):
     class Meta:
         fields = ('id', 'name', 'unit')
+        ordered = True
 
 ingredient_schema = IngredientSchema()
 many_ingredients_schema = IngredientSchema(many=True)
+
+class AssociationSchema(ma.Schema):
+    ingredient = ma.Nested(IngredientSchema)
+
+    class Meta:
+        fields = ('id', 'ingredient', 'quantity')
+        ordered = True
+
+class RecipeSchema(ma.Schema):
+    ingredients = ma.Nested(AssociationSchema, many=True)
+
+    class Meta:
+        fields = ('cost', 'id', 'ingredients', 'howto', 'portions', 'revenue', 'title')
+        ordered = True
+
+recipe_schema = RecipeSchema()
+many_recipes_schema = RecipeSchema(many=True)
