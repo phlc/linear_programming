@@ -1,6 +1,7 @@
 from flask import Blueprint, request
 from . import db, ma
-from .models import Recipe, Ingredient, ingredient_schema, many_ingredients_schema, recipe_schema, many_recipes_schema, validate_recipe
+from .models import Recipe, Ingredient, ingredient_schema, many_ingredients_schema
+from .models import recipe_schema, many_recipes_schema, validate_ingredients, validate_recipe
 
 
 
@@ -65,9 +66,11 @@ def add_recipe():
 
 @routes.route('/optimize-production', methods=['POST'])
 def optimize_production():
-    return "To Do"
+    inventory = validate_ingredients(request.json)
+    return inventory
 
 
 @routes.route('/optimize-profit', methods=['POST'])
 def optimize_profit():
-    return "To Do"
+    inventory = validate_ingredients(request.json)
+    return inventory

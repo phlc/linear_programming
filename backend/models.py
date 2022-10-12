@@ -98,7 +98,7 @@ def validate_recipe(data):
                 response['errors'].append({'ingredients': f"{ingredient['name']} not found in database"})
                 response['valid'] = False
             if(ingredient['quantity'] == None):
-                response['errors'].append({'ingredient': 'without quantity'})
+                response['errors'].append({{'ingredients': f"{ingredient['name']} without quantity"}})
                 response['valid'] = False
             if(response['valid']):
                 ids.append((ingredient_id.id, ingredient['quantity']))
@@ -112,4 +112,31 @@ def validate_recipe(data):
         db.session.commit()
         response['object'] = recipe_schema.dump(recipe)
 
+    return response
+
+
+def validate_ingredients(data):
+    ingredients = data['ingredients']
+    response = {'valid': True, 'errors': [], 'object': None}
+    ids = []
+    if(ingredients == None or len(ingredients)<1):
+        response['errors'].append({'ingredients': 'not found'})
+        response['valid'] = False
+    else:
+        for ingredient in ingredients:
+            ingredient_id = None
+            if(ingredient['name'] == None):
+                response['errors'].append({'ingredient': 'without name'})
+                response['valid'] = False
+            else:
+                ingredient_id = Ingredient.query.filter_by(name=ingredient['name']).first()
+            if(ingredient_id == None):
+                response['errors'].append({'ingredients': f"{ingredient['name']} not found in database"})
+                response['valid'] = False
+            if(ingredient['quantity'] == None):
+                response['errors'].append({'ingredients': f"{ingredient['name']} without quantity"})
+                response['valid'] = False
+            if(response['valid']):
+                ids.append((ingredient_id.id, ingredient['quantity']))
+        response['object'] = ids
     return response
