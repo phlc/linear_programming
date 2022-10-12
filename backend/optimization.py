@@ -9,39 +9,6 @@ cost=None
 revenue=None
 model_loaded = False
 
-def optimize(objective='production', inventory=None):
-    global recipes_ingredients
-    global portions
-    global cost
-    global revenue
-    global model_loaded
-
-    if(not model_loaded):
-        load_model()
-    
-    prob = None
-    obj_func = None
-    variables = [LpVariable(f"id_receita: {i}", 0, None, LpInteger) for i in range(len(portions))]
-
-    if(objective == 'production'):
-        prob = LpProblem("Maximize Production", LpMaximize)
-        obj_func = sum(p * v for p,v in zip(portions, variables))
-    elif(objective == 'profit'):
-        prob = LpProblem("Maximize Profit", LpMaximize)
-        obj_func = sum((r * v  -  c * v) for r,c,v in zip(revenue, cost, variables))
-
-    prob += obj_func, "Max Z"
-
-    for i in range(len(inventory)):
-        restriction = sum(recipes_ingredients[j][i] * variables[j] for j in range(len(variables)))
-        prob += restriction <= inventory[i]
-
-    prob.solve()
-    for v in prob.variables():
-        print(v.name, "=", v.varValue)
-    print("Z = ", value(prob.objective))
-
-
 def load_model():
     global recipes_ingredients
     global portions
@@ -75,3 +42,43 @@ def load_model():
     print(cost)
     print(revenue)
     model_loaded = True
+
+
+
+
+def optimize(objective='production', inventory=None):
+    global recipes_ingredients
+    global portions
+    global cost
+    global revenue
+    global model_loaded
+    solution = {"recipes": [], "Z": 0}
+
+    if(not model_loaded):
+        load_model()
+    
+    prob = None
+    obj_func = None
+    variables = [LpVariable(f"{i}", 0, None, LpInteger) for i in range(len(portions))]
+
+    if(objective == 'production'):
+        prob = LpProblem("Maximize Production", LpMaximize)
+        obj_func = sum(p * v for p,v in zip(portions, variables))
+    elif(objective == 'profit'):
+        prob = LpProblem("Maximize Profit", LpMaximize)
+        obj_func = sum((r * v  -  c * v) for r,c,v in zip(revenue, cost, variables))
+
+    prob += obj_func, "Max Z"
+
+    for i in range(len(inventory)):
+        restriction = sum(recipes_ingredients[j][i] * variables[j] for j in range(len(variables)))
+        prob += restriction <= inventory[i]
+
+    prob.solve()
+    for v in prob.variables():
+        solution["recipes"].append({f"{v.name}": v.varValue})
+   
+    solution["Z"] = value(prob.objective)
+
+    return solution
+
