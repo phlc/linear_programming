@@ -1,4 +1,5 @@
 from . import db, ma
+from sqlalchemy import func
 
 # Tables
 class Association(db.Model):
@@ -55,7 +56,7 @@ many_recipes_schema = RecipeSchema(many=True)
 
 # Helpers
 
-def validate_recipe(data):
+def add_new_recipe(data):
     response = {'valid': True, 'errors': [], 'object': None}
     title = data['title']
     howto = data['howto']
@@ -117,8 +118,8 @@ def validate_recipe(data):
 
 def validate_ingredients(data):
     ingredients = data['ingredients']
-    response = {'valid': True, 'errors': [], 'object': None}
-    ids = []
+    response = {'valid': True, 'errors': [], 'list': None}
+    ids = [0] * (db.session.query(func.max(Ingredient.id)).scalar() + 1)
     if(ingredients == None or len(ingredients)<1):
         response['errors'].append({'ingredients': 'not found'})
         response['valid'] = False
@@ -137,6 +138,6 @@ def validate_ingredients(data):
                 response['errors'].append({'ingredients': f"{ingredient['name']} without quantity"})
                 response['valid'] = False
             if(response['valid']):
-                ids.append((ingredient_id.id, ingredient['quantity']))
-        response['object'] = ids
+                ids[ingredient_id.id] = ingredient['quantity']
+        response['list'] = ids
     return response

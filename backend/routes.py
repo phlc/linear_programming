@@ -1,7 +1,8 @@
 from flask import Blueprint, request
 from . import db, ma
 from .models import Recipe, Ingredient, ingredient_schema, many_ingredients_schema
-from .models import recipe_schema, many_recipes_schema, validate_ingredients, validate_recipe
+from .models import recipe_schema, many_recipes_schema, validate_ingredients, add_new_recipe
+from .optimization import load_model, optimize
 
 
 
@@ -40,6 +41,7 @@ def add_ingredient():
     ingredient = Ingredient(name=name, unit=unit)
     db.session.add(ingredient)
     db.session.commit()
+    load_model()
     return ingredient_schema.dump(ingredient)
 
 
@@ -58,19 +60,25 @@ def get_recipe():
 
 @routes.route('/add-recipe', methods=['POST'])
 def add_recipe():
-    recipe = validate_recipe(request.json)
+    recipe = add_new_recipe(request.json)
     if(not recipe['valid']):
         return {'errors': recipe['errors']}
+    load_model()
     return recipe['object']
 
 
 @routes.route('/optimize-production', methods=['POST'])
 def optimize_production():
     inventory = validate_ingredients(request.json)
-    return inventory
+    if(inventory['valid']):
+        return optimize(objective='production', inventory=inventory['list'])
+    return {'errors': inventory['errors']}
+
 
 
 @routes.route('/optimize-profit', methods=['POST'])
 def optimize_profit():
     inventory = validate_ingredients(request.json)
-    return inventory
+    if(inventory['valid']):
+        return optimize(objective='production', inventory=inventory['list'])
+    return {'errors': inventory['errors']}
