@@ -42,17 +42,19 @@ Python based API to find optimal combination of recipes based on inventory's ing
 
             # body:
                 JSON
-                {
-                    "name": "azeite"
-                }
+                Example
+                    {
+                        "name": "azeite"
+                    }
 
             # response:
                 JSON
-                {
-                    "id": 10,
-                    "name": "azeite",
-                    "unit": "colheres de sopa"
-                }
+                Example:
+                    {
+                        "id": 10,
+                        "name": "azeite",
+                        "unit": "colheres de sopa"
+                    }
 
         /add-ingredient - adds one new ingredient to the database
             # Request Method:
