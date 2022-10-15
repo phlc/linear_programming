@@ -1,0 +1,41 @@
+data;
+
+set Recipes := i1, i2, i3, i4;
+set Ingredients := j1, j2, j3, j4, j5, j6, j7, j8, j9, j10;
+
+param q :=
+	i1 3
+	i2 6
+	i3 1
+	i4 4;
+	
+param v :=
+	i1 6
+	i2 4
+	i3 7
+	i4 9;
+	
+param c :=
+	i1 2
+	i2 3
+	i3 2
+	i4 7;
+	
+param g: j1 j2 j3 j4 j5 j6 j7 j8 j9 j10 :=
+	  i1  0  2  0  3  0  2  9  3  0  0
+	  i2  2  1  0  0  5  5  0  1  1  0
+	  i3  1  0  0  3  3  1  0  0  0  3
+	  i4  0  2  2  0  3  0  0  2  1  4;
+	 
+	
+param e :=
+	j1  32
+	j2  21
+	j3  15
+	j4  9
+	j5  37
+	j6  32
+	j7  22
+	j8  12
+	j9  15
+	j10 20;
