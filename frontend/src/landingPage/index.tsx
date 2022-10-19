@@ -7,11 +7,13 @@ import {
   TextField,
 } from "@mui/material";
 import React, { useState } from "react";
-import FirstStep from "../components/firstStep/firstStep";
+import FirstStep from "../components/firstStep";
+import SecondStep from "../components/secondStep";
+import ThirdStep from "../components/thirdStep";
 
 export default function LandingPage() {
   const [ingredient, setIngredient] = useState("");
-  const [ingredientsList, setIngredientsList] = useState([]);
+  const [ingredientsList, setIngredientsList] = useState(["teste", "teste", "teste"]);
 
   const handleIngredientChange = (event: SelectChangeEvent) => {
     setIngredient(event.target.value);
@@ -30,16 +32,8 @@ export default function LandingPage() {
             ingredientsList={ingredientsList}
             setIngredientsList={setIngredientsList}
           />
-          <section className="flex flex-col w-1/3">
-            <h2 className="text-heading-semibold-5 text-blue-100 mb-2">
-              Passo 2:
-            </h2>
-            <div className="flex bg-gray-100 max-w-sm py-10 px-8 max-h-72 rounded-2xl"></div>
-          </section>
-          <section className="flex flex-col w-1/3">
-            <h2 className="text-heading-semibold-5 text-blue-100 mb-2">Fim!</h2>
-            <div className="flex bg-gray-100 max-w-sm py-10 px-8 max-h-72 rounded-2xl"></div>
-          </section>
+          <SecondStep />
+          <ThirdStep />
         </div>
       </div>
     </div>

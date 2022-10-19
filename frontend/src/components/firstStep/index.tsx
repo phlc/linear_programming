@@ -12,7 +12,7 @@ import {
 interface FirstStepProps {
   ingredient: string;
   handleIngredientChange: (event: SelectChangeEvent) => void;
-  setIngredientsList: Dispatch<SetStateAction<never[]>>;
+  setIngredientsList: Dispatch<SetStateAction<string[]>>;
   ingredientsList: string[];
 }
 
@@ -25,7 +25,7 @@ export default function FirstStep({
   return (
     <section className="flex flex-col w-1/3">
       <h2 className="text-heading-semibold-5 text-blue-100 mb-2">Passo 1:</h2>
-      <div className="flex flex-col bg-gray-100 w-3/4 py-10 px-8 min-h-72 rounded-2xl">
+      <div className="flex flex-col bg-gray-100 w-3/4 py-10 px-8 rounded-2xl">
         <span className="text-body-semibold-1 mb-3">
           Selecione o ingrediente
         </span>
@@ -67,8 +67,8 @@ export default function FirstStep({
           Adicionar
         </Button>
       </div>
-      <div className="flex flex-col bg-gray-100 w-3/4 py-10 px-8 max-h-72 rounded-2xl mt-5">
-        <div className="flex flex-col bg-white shadow-1 rounded-xl max-w-sm py-10 px-8 max-h-72 rounded-2xl">
+      <div className="flex flex-col bg-gray-100 w-3/4 py-10 px-8 rounded-2xl mt-5">
+        <div className="flex flex-col bg-white shadow-1 rounded-xl max-w-sm py-10 px-8 rounded-2xl">
           <span className="text-body-semibold-1 mb-3">
             Lista de ingredientes adicionados:
           </span>
@@ -80,6 +80,21 @@ export default function FirstStep({
             );
           })}
         </div>
+        <Button
+          variant="contained"
+          style={{
+            backgroundColor: "#FFE0E0",
+            width: 107,
+            alignSelf: "flex-end",
+            color: "#242121",
+            textTransform: "none",
+            fontFamily: "Montserrat",
+            fontWeight: 600,
+            marginTop: 20,
+          }}
+        >
+          Limpar
+        </Button>
       </div>
     </section>
   );
