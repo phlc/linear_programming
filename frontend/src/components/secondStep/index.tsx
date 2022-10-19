@@ -1,4 +1,4 @@
-import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from "@mui/material";
+import { Button, FormControl, FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import React from "react";
 import { ReactComponent as TastingImage } from "../../assets/images/tasting.svg";
 
@@ -6,7 +6,7 @@ export default function SecondStep() {
   return (
     <section className="flex flex-col w-1/3">
       <h2 className="text-heading-semibold-5 text-blue-100 mb-2">Passo 2:</h2>
-      <div className="flex bg-gray-100 w-3/4 py-10 px-8 rounded-2xl mb-12">
+      <div className="flex flex-col bg-gray-100 w-3/4 py-10 px-8 rounded-2xl mb-12">
         <div className="flex flex-col bg-white shadow-1 rounded-xl max-w-sm py-10 px-8 rounded-2xl">
           <span className="text-body-semibold-1 mb-3">
             Selecione o método de otimização
@@ -21,6 +21,21 @@ export default function SecondStep() {
             </RadioGroup>
         </FormControl>
         </div>
+        <Button
+          variant="contained"
+          style={{
+            backgroundColor: "#E0FFF0",
+            width: 107,
+            alignSelf: "flex-end",
+            color: "#242121",
+            textTransform: "none",
+            fontFamily: "Montserrat",
+            fontWeight: 600,
+            marginTop: 20,
+          }}
+        >
+          Calcular
+        </Button>
       </div>
       <div className="flex w-3/4 justify-center">
         <TastingImage />

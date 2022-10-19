@@ -1,10 +1,5 @@
 import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  TextField,
+  SelectChangeEvent
 } from "@mui/material";
 import React, { useState } from "react";
 import FirstStep from "../components/firstStep";
