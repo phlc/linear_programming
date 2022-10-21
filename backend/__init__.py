@@ -35,6 +35,6 @@ def create_app():
 
 def create_database(app):
     """ Creates new database file if it doesn't exist """
-    if not path.exists('backend/' + DB_NAME):
+    if not path.exists(path.join('backend', DB_NAME)):
         db.create_all(app=app)
         print('Database Created')  
