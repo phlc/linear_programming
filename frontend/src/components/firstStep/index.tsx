@@ -74,7 +74,7 @@ export default function FirstStep({
           </span>
           {ingredientsList.map((item) => {
             return (
-              <span id={item} className="text-body-regular-2">
+              <span id={item} key={`${item}`} className="text-body-regular-2">
                 {item}
               </span>
             );
