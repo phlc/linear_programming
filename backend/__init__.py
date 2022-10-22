@@ -15,8 +15,8 @@ CORS_ALLOW_HEADERS="content-type,*"
 
 def create_app():
     """ Creates Flask app and sets its configurations """
-    app = Flask(__name__)
-    cors = CORS(app, origins=CORS_ALLOW_ORIGIN.split(","), allow_headers=CORS_ALLOW_HEADERS.split(",") , expose_headers= CORS_EXPOSE_HEADERS.split(","),   supports_credentials = True)
+    app = Flask(__name__, instance_path= path.abspath('backend'))
+    cors = CORS(app, origins=CORS_ALLOW_ORIGIN.split(","), allow_headers=CORS_ALLOW_HEADERS.split(",") , expose_headers= CORS_EXPOSE_HEADERS.split(","))
     app.config['CORS_HEADERS'] = 'Content-Type'
     app.config["SECRET_KEY"] = "falsneicm382xlkd"
     app.config["SQLALCHEMY_DATABASE_URI"] =  f'sqlite:///{DB_NAME}'
@@ -24,6 +24,8 @@ def create_app():
     app.config["SQLALCHEMY_ECHO"] = True
     db.init_app(app)
     ma.init_app(app)
+
+    print(">>>>", app.instance_path)
 
     from .routes import routes
     app.register_blueprint(routes, url_prefix='/') #especify routes.py as routes file
@@ -36,5 +38,6 @@ def create_app():
 def create_database(app):
     """ Creates new database file if it doesn't exist """
     if not path.exists(path.join('backend', DB_NAME)):
-        db.create_all(app=app)
+        with app.app_context():
+            db.create_all()
         print('Database Created')  
