@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useState, useCallback, useEffect } from "react";
 import {
   Button,
   FormControl,
@@ -8,20 +8,75 @@ import {
   SelectChangeEvent,
   TextField,
 } from "@mui/material";
+import { Ingredient, IngredientListItem } from "../../utils/types";
+import { getIngredients } from "../../services";
 
 interface FirstStepProps {
-  ingredient: string;
-  handleIngredientChange: (event: SelectChangeEvent) => void;
-  setIngredientsList: Dispatch<SetStateAction<string[]>>;
-  ingredientsList: string[];
+  selectedIngredientsList: IngredientListItem[];
+  setSelectedIngredientsList: Dispatch<SetStateAction<IngredientListItem[]>>;
 }
 
 export default function FirstStep({
-  ingredient,
-  handleIngredientChange,
-  ingredientsList,
-  setIngredientsList,
+  selectedIngredientsList,
+  setSelectedIngredientsList,
 }: FirstStepProps) {
+  const [ingredientOptions, setIngredientOptions] = useState<Ingredient[]>([])
+  const [selectedIngredient, setSelectedIngredient] = useState<Ingredient>();
+  const [amountValue, setAmountValue] = useState("")
+
+  const findIngredient = (id: string) => ingredientOptions.find((item) =>  item.id === id)
+
+  const clearInputs = () => {
+    setSelectedIngredient(undefined)
+    setAmountValue("")
+  }
+
+  const clearSelectedIngredientsList = () => setSelectedIngredientsList([])
+
+  const handleIngredientChange = async (event: SelectChangeEvent) => {
+    setSelectedIngredient(findIngredient(event.target.value));
+  };
+
+  const  handleIngredientOptions = useCallback(async () => {
+    const response = await getIngredients()
+    setIngredientOptions(response.data.ingredients)
+  }, [])
+
+  const handleAmountInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setAmountValue(event.target.value);
+  };
+
+  const handleAddIngredient = useCallback(() => {
+    if (selectedIngredient) {
+      const newIngrendientItem = {
+        id: selectedIngredient?.id,
+        amount: amountValue
+      } as IngredientListItem
+      setSelectedIngredientsList((prevState) => [...prevState, newIngrendientItem])
+      clearInputs()
+    }
+  }, [selectedIngredient, amountValue])
+
+  const listSelectedIngredients = () => {
+    if(selectedIngredientsList.length > 0 )
+      return selectedIngredientsList?.map((item) => {
+        const ingredient = findIngredient(item.id)
+        return (
+          <span id={item.id} key={`${item.id}`} className="text-body-regular-2">
+            {ingredient?.name || ""} - {item?.amount || ""} {ingredient?.unit || ""}
+          </span>
+        );
+      })
+    else 
+    return (<span className="text-body-regular-2">
+      Sua lista está vazia
+    </span>)
+
+  }
+
+  useEffect(() => {handleIngredientOptions()}, [])
+
+
   return (
     <section className="flex flex-col w-1/3">
       <h2 className="text-heading-semibold-5 text-blue-100 mb-2">Passo 1:</h2>
@@ -34,22 +89,23 @@ export default function FirstStep({
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={ingredient}
+            value={selectedIngredient?.id || ''}
             label="Ex: Leite"
             onChange={handleIngredientChange}
             style={{ backgroundColor: "white" }}
           >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            {ingredientOptions?.map((ingredient) => <MenuItem value={ingredient.id}>{ingredient.name}</MenuItem>)}
           </Select>
         </FormControl>
-        <span className="text-body-semibold-1 my-3">Quantidade</span>
+        <span className="text-body-semibold-1 my-3">Quantidade em {selectedIngredient?.unit || 'unidade de medida'}</span>
         <TextField
           id="outlined-basic"
-          label="Ex: 12L"
+          label={`Ex: 12 ${selectedIngredient?.unit || 'u'}`}
           variant="outlined"
           style={{ backgroundColor: "white" }}
+          value={amountValue}
+          onChange={handleAmountInputChange}
+
         />
         <Button
           variant="contained"
@@ -63,6 +119,7 @@ export default function FirstStep({
             fontWeight: 600,
             marginTop: 20,
           }}
+          onClick={() => handleAddIngredient()}
         >
           Adicionar
         </Button>
@@ -72,13 +129,7 @@ export default function FirstStep({
           <span className="text-body-semibold-1 mb-3">
             Lista de ingredientes adicionados:
           </span>
-          {ingredientsList.map((item) => {
-            return (
-              <span id={item} key={`${item}`} className="text-body-regular-2">
-                {item}
-              </span>
-            );
-          })}
+          {listSelectedIngredients()}
         </div>
         <Button
           variant="contained"
@@ -92,6 +143,7 @@ export default function FirstStep({
             fontWeight: 600,
             marginTop: 20,
           }}
+          onClick={() => clearSelectedIngredientsList()}
         >
           Limpar
         </Button>

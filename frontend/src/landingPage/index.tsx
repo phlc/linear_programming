@@ -5,14 +5,12 @@ import React, { useState } from "react";
 import FirstStep from "../components/firstStep";
 import SecondStep from "../components/secondStep";
 import ThirdStep from "../components/thirdStep";
+import { IngredientListItem } from "../utils/types";
 
 export default function LandingPage() {
-  const [ingredient, setIngredient] = useState("");
-  const [ingredientsList, setIngredientsList] = useState(["teste", "teste", "teste"]);
+  
+  const [selectedIngredientsList, setSelectedIngredientsList] = useState<IngredientListItem[]>([]);
 
-  const handleIngredientChange = (event: SelectChangeEvent) => {
-    setIngredient(event.target.value);
-  };
 
   return (
     <div className="flex bg-blue-200 min-h-screen p-12">
@@ -22,10 +20,8 @@ export default function LandingPage() {
         </h1>
         <div className="flex flex-row min-w-full  justify-between">
           <FirstStep
-            ingredient={ingredient}
-            handleIngredientChange={handleIngredientChange}
-            ingredientsList={ingredientsList}
-            setIngredientsList={setIngredientsList}
+            setSelectedIngredientsList={setSelectedIngredientsList}
+            selectedIngredientsList={selectedIngredientsList}
           />
           <SecondStep />
           <ThirdStep />
