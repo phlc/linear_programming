@@ -395,16 +395,27 @@ Python based API to find optimal combination of recipes based on inventory's ing
                 JSON
                 Example:
                     {
-                        "Z": 9.0,
+                        "Z": 13.0,
                         "recipes": [
                             {
-                                "1": 0.0
+                                "id": 1,
+                                "quantity": 0.0,
+                                "title": "Macarronada Fácil"
                             },
                             {
-                                "2": 2.0
+                                "id": 2,
+                                "quantity": 2.0,
+                                "title": "Arroz Rápido"
                             },
                             {
-                                "3": 1.0
+                                "id": 3,
+                                "quantity": 0.0,
+                                "title": "Milho Cozido"
+                            },
+                            {
+                                "id": 4,
+                                "quantity": 1.0,
+                                "title": "Sopa de Tomate"
                             }
                         ]
                     }
@@ -437,16 +448,27 @@ Python based API to find optimal combination of recipes based on inventory's ing
                 JSON
                 Example:
                     {
-                        "Z": 9.0,
+                        "Z": 13.0,
                         "recipes": [
                             {
-                                "1": 0.0
+                                "id": 1,
+                                "quantity": 0.0,
+                                "title": "Macarronada Fácil"
                             },
                             {
-                                "2": 2.0
+                                "id": 2,
+                                "quantity": 2.0,
+                                "title": "Arroz Rápido"
                             },
                             {
-                                "3": 1.0
+                                "id": 3,
+                                "quantity": 0.0,
+                                "title": "Milho Cozido"
+                            },
+                            {
+                                "id": 4,
+                                "quantity": 1.0,
+                                "title": "Sopa de Tomate"
                             }
                         ]
                     }

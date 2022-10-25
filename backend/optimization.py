@@ -92,7 +92,7 @@ def optimize(objective='production', inventory=None):
 
     # Load dictionary with solution's data
     for v in prob.variables():
-        solution["recipes"].append({f"{v.name}": v.varValue})
+        solution["recipes"].append({"id": int(v.name), "quantity": v.varValue, "title": Recipe.query.get(int(v.name)).title})
    
     solution["Z"] = value(prob.objective)
 

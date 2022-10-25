@@ -25,8 +25,6 @@ def create_app():
     db.init_app(app)
     ma.init_app(app)
 
-    print(">>>>", app.instance_path)
-
     from .routes import routes
     app.register_blueprint(routes, url_prefix='/') #especify routes.py as routes file
 
