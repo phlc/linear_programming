@@ -95,7 +95,10 @@ def optimize(objective='production', inventory=None):
         recipe = Recipe.query.get(int(v.name))
         solution["recipes"].append({"id": int(v.name), 
                                     "quantity": v.varValue, 
-                                    "title": recipe.title}
+                                    "title": recipe.title,
+                                    "cost": recipe.cost,
+                                    "revenue": recipe.revenue,
+                                    "portions": recipe.portions}
                                   )
    
     solution["Z"] = value(prob.objective)

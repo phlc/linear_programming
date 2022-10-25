@@ -395,26 +395,38 @@ Python based API to find optimal combination of recipes based on inventory's ing
                 JSON
                 Example:
                     {
-                        "Z": 13.0,
+                        "Z": 12.0,
                         "recipes": [
                             {
+                                "cost": 12,
                                 "id": 1,
+                                "portions": 4,
                                 "quantity": 0.0,
+                                "revenue": 20,
                                 "title": "Macarronada Fácil"
                             },
                             {
+                                "cost": 7,
                                 "id": 2,
+                                "portions": 4,
                                 "quantity": 2.0,
+                                "revenue": 10,
                                 "title": "Arroz Rápido"
                             },
                             {
+                                "cost": 2,
                                 "id": 3,
+                                "portions": 1,
                                 "quantity": 0.0,
+                                "revenue": 5,
                                 "title": "Milho Cozido"
                             },
                             {
+                                "cost": 3,
                                 "id": 4,
+                                "portions": 4,
                                 "quantity": 1.0,
+                                "revenue": 10,
                                 "title": "Sopa de Tomate"
                             }
                         ]
@@ -451,23 +463,35 @@ Python based API to find optimal combination of recipes based on inventory's ing
                         "Z": 13.0,
                         "recipes": [
                             {
+                                "cost": 12,
                                 "id": 1,
+                                "portions": 4,
                                 "quantity": 0.0,
+                                "revenue": 20,
                                 "title": "Macarronada Fácil"
                             },
                             {
+                                "cost": 7,
                                 "id": 2,
+                                "portions": 4,
                                 "quantity": 2.0,
+                                "revenue": 10,
                                 "title": "Arroz Rápido"
                             },
                             {
+                                "cost": 2,
                                 "id": 3,
+                                "portions": 1,
                                 "quantity": 0.0,
+                                "revenue": 5,
                                 "title": "Milho Cozido"
                             },
                             {
+                                "cost": 3,
                                 "id": 4,
+                                "portions": 4,
                                 "quantity": 1.0,
+                                "revenue": 10,
                                 "title": "Sopa de Tomate"
                             }
                         ]
