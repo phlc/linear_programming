@@ -19,4 +19,8 @@ export const getOtimizationResult = (objective: string, ingredients: {name: stri
         return api.post('/optimize-profit', body)
 }
 
-// /add-ingredient
+export const getRecipeById = (id: string) => {
+    const body = {id}
+   
+    return api.post('/get-recipe', body)
+}
