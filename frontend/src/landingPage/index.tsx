@@ -5,13 +5,12 @@ import React, { useState } from "react";
 import FirstStep from "../components/firstStep";
 import SecondStep from "../components/secondStep";
 import ThirdStep from "../components/thirdStep";
-import { IngredientListItem } from "../utils/types";
+import { IngredientListItem, OtimizationResultType } from "../utils/types";
 
 export default function LandingPage() {
   
   const [selectedIngredientsList, setSelectedIngredientsList] = useState<IngredientListItem[]>([]);
-
-
+  const [otimizationResult, setOtimizationResult] = useState<OtimizationResultType> ({Z: '', recipes: []})
   return (
     <div className="flex bg-blue-200 min-h-screen p-12">
       <div className="flex flex-col bg-white shadow-1 rounded-3xl min-w-full p-10">
@@ -23,8 +22,11 @@ export default function LandingPage() {
             setSelectedIngredientsList={setSelectedIngredientsList}
             selectedIngredientsList={selectedIngredientsList}
           />
-          <SecondStep />
-          <ThirdStep />
+          <SecondStep 
+            selectedIngredientsList={selectedIngredientsList} 
+            setOtimizationResult={setOtimizationResult} 
+          />
+          <ThirdStep otimizationResult={otimizationResult}/>
         </div>
       </div>
     </div>

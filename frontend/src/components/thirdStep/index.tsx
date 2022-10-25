@@ -1,6 +1,13 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+import { OtimizationResultType } from "../../utils/types";
 
-export default function ThirdStep() {
+export interface ThirdStepProps {
+  otimizationResult: OtimizationResultType
+}
+
+
+export default function ThirdStep({otimizationResult}: ThirdStepProps) {
+
   return (
     <section className="flex flex-col w-1/3">
       <h2 className="text-heading-semibold-5 text-blue-100 mb-2">Fim!</h2>

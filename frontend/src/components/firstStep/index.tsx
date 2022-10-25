@@ -22,13 +22,13 @@ export default function FirstStep({
 }: FirstStepProps) {
   const [ingredientOptions, setIngredientOptions] = useState<Ingredient[]>([])
   const [selectedIngredient, setSelectedIngredient] = useState<Ingredient>();
-  const [amountValue, setAmountValue] = useState("")
+  const [quantityValue, setQuantityValue] = useState("")
 
   const findIngredient = (id: string) => ingredientOptions.find((item) =>  item.id === id)
 
   const clearInputs = () => {
     setSelectedIngredient(undefined)
-    setAmountValue("")
+    setQuantityValue("")
   }
 
   const clearSelectedIngredientsList = () => setSelectedIngredientsList([])
@@ -42,20 +42,21 @@ export default function FirstStep({
     setIngredientOptions(response.data.ingredients)
   }, [])
 
-  const handleAmountInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAmountValue(event.target.value);
+  const handleQuantityInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setQuantityValue(event.target.value);
   };
 
   const handleAddIngredient = useCallback(() => {
     if (selectedIngredient) {
       const newIngrendientItem = {
         id: selectedIngredient?.id,
-        amount: amountValue
+        name: selectedIngredient?.name,
+        quantity: quantityValue
       } as IngredientListItem
       setSelectedIngredientsList((prevState) => [...prevState, newIngrendientItem])
       clearInputs()
     }
-  }, [selectedIngredient, amountValue])
+  }, [selectedIngredient, quantityValue])
 
   const listSelectedIngredients = () => {
     if(selectedIngredientsList.length > 0 )
@@ -63,7 +64,7 @@ export default function FirstStep({
         const ingredient = findIngredient(item.id)
         return (
           <span id={item.id} key={`${item.id}`} className="text-body-regular-2">
-            {ingredient?.name || ""} - {item?.amount || ""} {ingredient?.unit || ""}
+            {ingredient?.name || ""} - {item?.quantity || ""} {ingredient?.unit || ""}
           </span>
         );
       })
@@ -103,8 +104,8 @@ export default function FirstStep({
           label={`Ex: 12 ${selectedIngredient?.unit || 'u'}`}
           variant="outlined"
           style={{ backgroundColor: "white" }}
-          value={amountValue}
-          onChange={handleAmountInputChange}
+          value={quantityValue}
+          onChange={handleQuantityInputChange}
 
         />
         <Button

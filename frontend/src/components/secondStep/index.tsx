@@ -1,8 +1,29 @@
 import { Button, FormControl, FormControlLabel, Radio, RadioGroup } from "@mui/material";
-import React from "react";
+import React, {Dispatch, SetStateAction, useState} from "react";
 import { ReactComponent as TastingImage } from "../../assets/images/tasting.svg";
+import { getOtimizationResult } from "../../services";
+import { IngredientListItem, OtimizationResultType } from "../../utils/types";
 
-export default function SecondStep() {
+export interface SecondStepProps {
+  selectedIngredientsList: IngredientListItem[];
+  setOtimizationResult: Dispatch<SetStateAction<OtimizationResultType>>;
+}
+
+export default function SecondStep({selectedIngredientsList, setOtimizationResult}: SecondStepProps) {
+  const [objective, setObjective] = useState("maxProdution")
+
+  const handleOnSubmit = async () => {
+    try {
+      const ingredients = selectedIngredientsList.map((ingredient) => ({name: ingredient.name, quantity: ingredient.quantity}))
+      const response = await getOtimizationResult(objective,ingredients)
+
+      setOtimizationResult(response.data)
+
+    } catch (erro) {
+      console.log("Error", erro)
+    }
+  }
+
   return (
     <section className="flex flex-col w-1/3">
       <h2 className="text-heading-semibold-5 text-blue-100 mb-2">Passo 2:</h2>
@@ -13,11 +34,12 @@ export default function SecondStep() {
           </span>
           <FormControl>
             <RadioGroup
-                defaultValue="female"
+                defaultValue="maxProdution"
                 name="radio-buttons-group"
+                onChange={(e) => setObjective(e.target.value)}
             >
-                <FormControlLabel value="female" control={<Radio />} label="Maximizar Produção" />
-                <FormControlLabel value="male" control={<Radio />} label="Maximizar Lucro" />
+                <FormControlLabel value="maxProdution" control={<Radio />} label="Maximizar Produção" />
+                <FormControlLabel value="maxProfit" control={<Radio />} label="Maximizar Lucro" />
             </RadioGroup>
         </FormControl>
         </div>
@@ -33,6 +55,7 @@ export default function SecondStep() {
             fontWeight: 600,
             marginTop: 20,
           }}
+          onClick={handleOnSubmit}
         >
           Calcular
         </Button>

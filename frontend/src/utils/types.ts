@@ -4,7 +4,19 @@ export interface Ingredient {
     unit: string
 }
 
+export interface Recipe {
+    id: string
+    name?: string
+    quantity: string
+}
+
 export interface IngredientListItem {
     id: string
-    amount: string
+    name: string
+    quantity: string
+}
+
+export interface OtimizationResultType {
+    Z: string
+    recipes: Recipe[]
 }
