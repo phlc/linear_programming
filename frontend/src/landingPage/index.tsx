@@ -11,6 +11,7 @@ export default function LandingPage() {
   
   const [selectedIngredientsList, setSelectedIngredientsList] = useState<IngredientListItem[]>([]);
   const [otimizationResult, setOtimizationResult] = useState<OtimizationResultType> ({Z: '', recipes: []})
+  console.log(Object(otimizationResult))
   return (
     <div className="flex bg-blue-200 min-h-screen p-12">
       <div className="flex flex-col bg-white shadow-1 rounded-3xl min-w-full p-10">
