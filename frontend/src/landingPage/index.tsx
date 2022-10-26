@@ -1,17 +1,16 @@
-import {
-  SelectChangeEvent
-} from "@mui/material";
 import React, { useState } from "react";
 import FirstStep from "../components/firstStep";
 import SecondStep from "../components/secondStep";
 import ThirdStep from "../components/thirdStep";
-import { IngredientListItem, OtimizationResultType } from "../utils/types";
+import { IngredientListItem, OptimizationResultType } from "../utils/types";
 
 export default function LandingPage() {
   
   const [selectedIngredientsList, setSelectedIngredientsList] = useState<IngredientListItem[]>([]);
-  const [otimizationResult, setOtimizationResult] = useState<OtimizationResultType> ({Z: '', recipes: []})
-  console.log(Object(otimizationResult))
+  const [optimizationResult, setOptimizationResult] = useState<OptimizationResultType> ({Z: '', recipes: []})
+  const [optimizationType, setOptimizationType] = useState("");
+
+  console.log(Object(optimizationResult))
   return (
     <div className="flex bg-blue-200 min-h-screen p-12">
       <div className="flex flex-col bg-white shadow-1 rounded-3xl min-w-full p-10">
@@ -25,9 +24,10 @@ export default function LandingPage() {
           />
           <SecondStep 
             selectedIngredientsList={selectedIngredientsList} 
-            setOtimizationResult={setOtimizationResult} 
+            setOptimizationResult={setOptimizationResult} 
+            setOptimizationType={setOptimizationType}
           />
-          <ThirdStep otimizationResult={otimizationResult}/>
+          <ThirdStep optimizationResult={optimizationResult} type={optimizationType}/>
         </div>
       </div>
     </div>

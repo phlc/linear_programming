@@ -200,6 +200,14 @@ module.exports = {
           fontWeight: "bold"
         },
       ],
+      "caption-semibold-1": [
+        "0.75rem",
+        {
+          lineHeight: "20px",
+          letterSpacing: "0.031em",
+          fontWeight: 600
+        },
+      ],
       "caption-regular-1": [
         "0.75rem",
         {

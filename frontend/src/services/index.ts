@@ -11,9 +11,10 @@ export const getIngredientByName = (name:string) => {
     return api.post('/get-ingredient', body)
 }
 
-export const getOtimizationResult = (objective: string, ingredients: {name: string, quantity: string}[]  ) => {
+export const getOptimizationResult = (objective: string, ingredients: {name: string, quantity: number}[]  ) => {
     const body = {ingredients}
-    if(objective === 'maxProdution')
+    console.log(JSON.stringify(body))
+    if(objective === 'maxProduction')
         return api.post('/optimize-production', body)
     else 
         return api.post('/optimize-profit', body)

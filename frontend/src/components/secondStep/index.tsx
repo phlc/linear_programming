@@ -1,23 +1,24 @@
 import { Button, FormControl, FormControlLabel, Radio, RadioGroup } from "@mui/material";
 import React, {Dispatch, SetStateAction, useState} from "react";
 import { ReactComponent as TastingImage } from "../../assets/images/tasting.svg";
-import { getOtimizationResult } from "../../services";
-import { IngredientListItem, OtimizationResultType } from "../../utils/types";
+import { getOptimizationResult } from "../../services";
+import { IngredientListItem, OptimizationResultType } from "../../utils/types";
 
 export interface SecondStepProps {
   selectedIngredientsList: IngredientListItem[];
-  setOtimizationResult: Dispatch<SetStateAction<OtimizationResultType>>;
+  setOptimizationResult: Dispatch<SetStateAction<OptimizationResultType>>;
+  setOptimizationType: Dispatch<SetStateAction<string>>;
 }
 
-export default function SecondStep({selectedIngredientsList, setOtimizationResult}: SecondStepProps) {
-  const [objective, setObjective] = useState("maxProdution")
+export default function SecondStep({selectedIngredientsList, setOptimizationResult, setOptimizationType}: SecondStepProps) {
+  const [objective, setObjective] = useState("maxProduction")
 
   const handleOnSubmit = async () => {
     try {
-      const ingredients = selectedIngredientsList.map((ingredient) => ({name: ingredient.name, quantity: ingredient.quantity}))
-      const response = await getOtimizationResult(objective,ingredients)
+      const ingredients = selectedIngredientsList.map((ingredient) => ({name: ingredient.name, quantity: Number(ingredient.quantity)}))
+      const response = await getOptimizationResult(objective, ingredients)
 
-      setOtimizationResult(response.data)
+      setOptimizationResult(response.data)
 
     } catch (erro) {
       console.log("Error", erro)
@@ -34,11 +35,11 @@ export default function SecondStep({selectedIngredientsList, setOtimizationResul
           </span>
           <FormControl>
             <RadioGroup
-                defaultValue="maxProdution"
+                defaultValue="maxProduction"
                 name="radio-buttons-group"
-                onChange={(e) => setObjective(e.target.value)}
+                onChange={(e) => { setObjective(e.target.value); setOptimizationType(e.target.value) }}
             >
-                <FormControlLabel value="maxProdution" control={<Radio />} label="Maximizar Produção" />
+                <FormControlLabel value="maxProduction" control={<Radio />} label="Maximizar Produção" />
                 <FormControlLabel value="maxProfit" control={<Radio />} label="Maximizar Lucro" />
             </RadioGroup>
         </FormControl>
