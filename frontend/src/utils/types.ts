@@ -12,8 +12,11 @@ export interface IngredientRecipe {
 
 export interface Recipe {
     id: string
-    name?: string
+    title: string
     quantity: string
+    portions : string
+    revenue: string
+    cost: string
 }
 
 export interface DetailedRecipe {
@@ -32,7 +35,7 @@ export interface IngredientListItem {
     quantity: string
 }
 
-export interface OtimizationResultType {
+export interface OptimizationResultType {
     Z: string
     recipes: Recipe[]
 }

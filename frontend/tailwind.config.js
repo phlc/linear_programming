@@ -200,6 +200,14 @@ module.exports = {
           fontWeight: "bold"
         },
       ],
+      "caption-semibold-1": [
+        "0.75rem",
+        {
+          lineHeight: "20px",
+          letterSpacing: "0.031em",
+          fontWeight: 600
+        },
+      ],
       "caption-regular-1": [
         "0.75rem",
         {
@@ -320,6 +328,7 @@ module.exports = {
       blue: {
         100: "#2794F9",
         200: "#E0F6FF",
+        300: "#8ED6FF",
       },
     },
     boxShadow: {
