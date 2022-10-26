@@ -81,7 +81,7 @@ export default function FirstStep({
   return (
     <section className="flex flex-col w-1/3">
       <h2 className="text-heading-semibold-5 text-blue-100 mb-2">Passo 1:</h2>
-      <div className="flex flex-col bg-gray-100 w-3/4 py-10 px-8 rounded-2xl">
+      <div className="flex flex-col bg-gray-100 w-11/12 xl:w-3/4 py-10 px-8 rounded-2xl">
         <span className="text-body-semibold-1 mb-3">
           Selecione o ingrediente
         </span>
@@ -125,7 +125,7 @@ export default function FirstStep({
           Adicionar
         </Button>
       </div>
-      <div className="flex flex-col bg-gray-100 w-3/4 py-10 px-8 rounded-2xl mt-5">
+      <div className="flex flex-col bg-gray-100 w-11/12 xl:w-3/4 py-10 px-8 rounded-2xl mt-5">
         <div className="flex flex-col bg-white shadow-1 rounded-xl max-w-sm py-10 px-8 rounded-2xl">
           <span className="text-body-semibold-1 mb-3">
             Lista de ingredientes adicionados:
