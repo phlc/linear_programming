@@ -28,7 +28,7 @@ export default function SecondStep({selectedIngredientsList, setOptimizationResu
   return (
     <section className="flex flex-col w-1/3">
       <h2 className="text-heading-semibold-5 text-blue-100 mb-2">Passo 2:</h2>
-      <div className="flex flex-col bg-gray-100 w-3/4 py-10 px-8 rounded-2xl mb-12">
+      <div className="flex flex-col bg-gray-100 w-11/12 xl:w-3/4 py-10 px-8 rounded-2xl mb-12">
         <div className="flex flex-col bg-white shadow-1 rounded-xl max-w-sm py-10 px-8 rounded-2xl">
           <span className="text-body-semibold-1 mb-3">
             Selecione o método de otimização
@@ -61,7 +61,7 @@ export default function SecondStep({selectedIngredientsList, setOptimizationResu
           Calcular
         </Button>
       </div>
-      <div className="flex w-3/4 justify-center">
+      <div className="flex w-11/12 xl:w-3/4 justify-center">
         <TastingImage />
       </div>
     </section>
