@@ -40,8 +40,8 @@ export default function SecondStep({selectedIngredientsList, setOptimizationResu
                 name="radio-buttons-group"
                 onChange={(e) => { setObjective(e.target.value) }}
             >
-                <FormControlLabel value="maxProduction" control={<Radio />} onChange={() => setOptimizationResult({Z: 0, recipes: []})} label="Maximizar Produção" />
-                <FormControlLabel value="maxProfit" control={<Radio />} onChange={() => setOptimizationResult({Z: 0, recipes: []})} label="Maximizar Lucro" />
+                <FormControlLabel value="maxProduction" control={<Radio />} label="Maximizar Produção" />
+                <FormControlLabel value="maxProfit" control={<Radio />} label="Maximizar Lucro" />
             </RadioGroup>
         </FormControl>
         </div>
