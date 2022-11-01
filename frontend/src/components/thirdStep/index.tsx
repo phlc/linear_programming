@@ -26,7 +26,7 @@ export default function ThirdStep({
             {type === "maxProduction"
               ? "Produção máxima: "
               : type === "maxProfit" ? "Lucro máximo: R$ " : ""}{" "}
-            {optimizationResult.Z} {type === "maxProduction" ? " receitas" : ""}
+            {optimizationResult.Z} {type === "maxProduction" ? " porções" : ""}
           </span>
         </div>
       </div>
