@@ -25,7 +25,7 @@ export default function ThirdStep({
           <span className="text-caption-semibold-1 mt-4">
             {type === "maxProduction"
               ? "Produção máxima: "
-              : "Lucro máximo: R$ "}{" "}
+              : type === "maxProfit" ? "Lucro máximo: R$ " : ""}{" "}
             {optimizationResult.Z} {type === "maxProduction" ? " porções" : ""}
           </span>
         </div>
