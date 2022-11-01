@@ -15,6 +15,7 @@ export default function SecondStep({selectedIngredientsList, setOptimizationResu
 
   const handleOnSubmit = async () => {
     try {
+      setOptimizationType(objective)
       const ingredients = selectedIngredientsList.map((ingredient) => ({name: ingredient.name, quantity: Number(ingredient.quantity)}))
       const response = await getOptimizationResult(objective, ingredients)
 
@@ -37,7 +38,7 @@ export default function SecondStep({selectedIngredientsList, setOptimizationResu
             <RadioGroup
                 defaultValue="maxProduction"
                 name="radio-buttons-group"
-                onChange={(e) => { setObjective(e.target.value); setOptimizationType(e.target.value) }}
+                onChange={(e) => { setObjective(e.target.value) }}
             >
                 <FormControlLabel value="maxProduction" control={<Radio />} label="Maximizar Produção" />
                 <FormControlLabel value="maxProfit" control={<Radio />} label="Maximizar Lucro" />
